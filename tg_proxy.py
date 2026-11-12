@@ -103,7 +103,7 @@ class TgProxyManager:
         if self.settings.get("default_created") or self.items:
             self.settings["default_created"] = True
             return
-        px = self.create("mtproto", "Default Proxy · پیش‌فرض", 0, 0, 0, "پروکسی پیش‌فرض VodiWalker")
+        px = self.create("mtproto", "Default Proxy · پیش‌فرض", 0, 0, 0, "پروکسی پیش‌فرض NexoraPanel")
         px["default"] = True
         self.settings["default_created"] = True
         self.save()
