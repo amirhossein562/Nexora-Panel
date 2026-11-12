@@ -210,7 +210,7 @@ async def _set_menu_button():
 def _main_menu_kb():
     _tma = _tma_url()
     return {"inline_keyboard": [
-        *([[{"text": "🚀 باز کردن مینی‌اپ VodiWalker", "web_app": {"url": _tma}}]] if _tma else []),
+        *([[{"text": "🚀 باز کردن مینی‌اپ NexoraPanel", "web_app": {"url": _tma}}]] if _tma else []),
         [{"text": "⚡ ساخت سریع کانفیگ", "callback_data": "quick"}, {"text": "🧩 ساخت پیشرفته", "callback_data": "newcfg"}],
         [{"text": "📋 لیست کانفیگ‌ها", "callback_data": "list:0"}, {"text": "🗂 گروه‌های ساب", "callback_data": "subs:0"}],
         [{"text": "🟢 آنلاین‌ها", "callback_data": "online"}, {"text": "🔥 پرمصرف‌ها", "callback_data": "top"}, {"text": "⏳ نزدیک انقضا", "callback_data": "expiring"}],
@@ -385,7 +385,7 @@ def _wizard_prompt(step: str, data: dict) -> str:
     n = WIZARD_STEPS.index(step) + 1 if step in WIZARD_STEPS else len(WIZARD_STEPS)
     head = f"🧩 ساخت کانفیگ جدید — مرحله {n}/{len(WIZARD_STEPS)}\n\n"
     if step == "label":
-        return head + "✏️ اسم/برچسب کانفیگ رو بفرست (مثلاً <code>Vodiwalker</code> → <code>Vodiwalker|Tofan🚀</code>)\nیا اسم خودکار خفن رو بزن:"
+        return head + "✏️ اسم/برچسب کانفیگ رو بفرست (مثلاً <code>NexoraPanel</code> → <code>Vodiwalker|Tofan🚀</code>)\nیا اسم خودکار خفن رو بزن:"
     if step == "protocol":
         return head + "🌐 پروتکل رو از دکمه‌های زیر انتخاب کن:\n<i>🔗 یعنی این پروتکل فقط لینک/کانفیگ می‌سازه و خودِ این پنل بهش سرویس نمی‌ده (برای استفاده روی یک نود Xray-core جدا).</i>"
     if step == "fingerprint":
@@ -841,7 +841,7 @@ def _stats_text() -> str:
     top = _top_items(1)
     top_line = f"\n🔥 پرمصرف‌ترین: {_h(top[0][1].get('label', '?'))} ({fmt_bytes(int(top[0][1].get('used_bytes') or 0))})" if top and int(top[0][1].get("used_bytes") or 0) else ""
     return (
-        "📊 <b>آمار کلی VodiWalker</b>\n\n"
+        "📊 <b>آمار کلی NexoraPanel</b>\n\n"
         f"🌐 کل کانفیگ‌ها: <b>{total}</b>\n"
         f"🟢 فعال: <b>{active}</b> · 🔴 غیرفعال/منقضی: <b>{total - active}</b>\n"
         f"🟣 آنلاین همین الان: <b>{online}</b> اتصال\n"
@@ -863,7 +863,7 @@ async def _do_backup(chat_id: int):
         return
     stamp = datetime.now().strftime("%Y%m%d-%H%M")
     res = await _upload_document(chat_id, f"vodiwalker-backup-{stamp}.json", content,
-                                 f"💾 <b>بکاپ VodiWalker</b>\n{len(LINKS)} کانفیگ · {len(SUBS)} گروه\n⚠️ این فایل حاوی UUID همه‌ی کانفیگ‌هاست؛ جای امن نگهش دار.")
+                                 f"💾 <b>بکاپ NexoraPanel</b>\n{len(LINKS)} کانفیگ · {len(SUBS)} گروه\n⚠️ این فایل حاوی UUID همه‌ی کانفیگ‌هاست؛ جای امن نگهش دار.")
     if not res or not res.get("ok"):
         await _send(chat_id, "❌ ارسال فایل بکاپ ناموفق بود.")
 
@@ -886,7 +886,7 @@ async def _bulk_create(chat_id: int, args: list):
     try:
         n = int(args[0]); vol = args[1] if len(args) > 1 else "0"; days = int(args[2]) if len(args) > 2 else 30
     except Exception:
-        await _send(chat_id, "فرمت: <code>/bulk تعداد حجم روز [نام]</code>\nمثال: <code>/bulk 10 30GB 30 Vodiwalker</code>\n(حجم 0 = نامحدود)")
+        await _send(chat_id, "فرمت: <code>/bulk تعداد حجم روز [نام]</code>\nمثال: <code>/bulk 10 30GB 30 NexoraPanel</code>\n(حجم 0 = نامحدود)")
         return
     if not (1 <= n <= 50):
         await _send(chat_id, "تعداد باید بین 1 تا 50 باشه.")
@@ -898,7 +898,7 @@ async def _bulk_create(chat_id: int, args: list):
     if not _real_host():
         await _send(chat_id, NO_HOST_MSG)
         return
-    base_name = " ".join(args[3:]).strip()[:30] or "VodiWalker"
+    base_name = " ".join(args[3:]).strip()[:30] or "NexoraPanel"
     await _send(chat_id, f"⏳ در حال ساخت {n} کانفیگ واقعی…")
     sid, sub = await create_sub_group(name=f"{base_name} · {datetime.now().strftime('%m/%d %H:%M')}")
     lines, made = [], 0
@@ -949,7 +949,7 @@ async def _alert_loop():
                 new = [t for k, t in cond.items() if k not in _alert_keys]
                 _alert_keys = set(cond)
                 if new and _alerts_enabled and ADMIN_IDS:
-                    text = "🔔 <b>هشدار خودکار VodiWalker</b>\n\n" + "\n".join(new[:15])
+                    text = "🔔 <b>هشدار خودکار NexoraPanel</b>\n\n" + "\n".join(new[:15])
                     kb = {"inline_keyboard": [[{"text": "⏳ نمایش لیست", "callback_data": "expiring"}]]}
                     for aid in ADMIN_IDS:
                         await _send(aid, text, kb)
@@ -971,7 +971,7 @@ BOT_COMMANDS = [
 ]
 
 HELP_TEXT = (
-    "📖 <b>راهنمای ربات VodiWalker</b>\n\n"
+    "📖 <b>راهنمای ربات NexoraPanel</b>\n\n"
     "⚡ /new — ساخت سریع کانفیگ واقعی (یک‌کلیکی، با اسم خفن)\n"
     "🔎 /find نام — جستجو بین کانفیگ‌ها (یا مستقیم اسم رو بفرست)\n"
     "🟢 /online — کاربران آنلاین همین الان\n"
@@ -1052,12 +1052,12 @@ async def _handle_message(msg: dict):
 
     if text.startswith("/start") or text == "/admin":
         _pending.pop(chat_id, None)
-        await _send(chat_id, _admin_welcome_text(get_bot_text("welcome", "👋 <b>VodiWalker Control Center</b>\nمدیریت کامل سرویس:")), _main_menu_kb())
+        await _send(chat_id, _admin_welcome_text(get_bot_text("welcome", "👋 <b>NexoraPanel Control Center</b>\nمدیریت کامل سرویس:")), _main_menu_kb())
         return
 
     if text == "/menu":
         _pending.pop(chat_id, None)
-        await _send(chat_id, _admin_welcome_text(get_bot_text("welcome", "🛠 <b>VodiWalker Control Center</b>")), _main_menu_kb())
+        await _send(chat_id, _admin_welcome_text(get_bot_text("welcome", "🛠 <b>NexoraPanel Control Center</b>")), _main_menu_kb())
         return
 
     if text == "/cancel":
@@ -1272,7 +1272,7 @@ async def _handle_callback(cb: dict):
     if data == "alerts:toggle":
         global _alerts_enabled
         _alerts_enabled = not _alerts_enabled
-        await _edit(chat_id, message_id, _admin_welcome_text("🛠 <b>VodiWalker Control Center</b>"), _main_menu_kb())
+        await _edit(chat_id, message_id, _admin_welcome_text("🛠 <b>NexoraPanel Control Center</b>"), _main_menu_kb())
         return
 
     if data.startswith("edit:"):
@@ -1293,7 +1293,7 @@ async def _handle_callback(cb: dict):
             return
         if kind == "name":
             _pending[chat_id] = {"action": "rename", "uid": uid}
-            await _edit(chat_id, message_id, "✏️ اسم جدید رو بفرست (مثلاً <code>Vodiwalker</code>؛ خودم تبدیلش می‌کنم به <code>Vodiwalker|Tofan🚀</code>):", _wizard_cancel_kb())
+            await _edit(chat_id, message_id, "✏️ اسم جدید رو بفرست (مثلاً <code>NexoraPanel</code>؛ خودم تبدیلش می‌کنم به <code>Vodiwalker|Tofan🚀</code>):", _wizard_cancel_kb())
             return
         if kind == "gb":
             if not int(l.get("limit_bytes") or 0):
@@ -1313,7 +1313,7 @@ async def _handle_callback(cb: dict):
 
     if data == "menu":
         _pending.pop(chat_id, None)
-        await _edit(chat_id, message_id, _admin_welcome_text(get_bot_text("admin_menu", "🛠 <b>VodiWalker Control Center</b>")), _main_menu_kb())
+        await _edit(chat_id, message_id, _admin_welcome_text(get_bot_text("admin_menu", "🛠 <b>NexoraPanel Control Center</b>")), _main_menu_kb())
         return
 
     if data == "stats":
