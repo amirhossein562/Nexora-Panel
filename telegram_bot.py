@@ -862,7 +862,7 @@ async def _do_backup(chat_id: int):
         await _send(chat_id, f"❌ خواندن بکاپ ناموفق بود: {_h(e)}")
         return
     stamp = datetime.now().strftime("%Y%m%d-%H%M")
-    res = await _upload_document(chat_id, f"vodiwalker-backup-{stamp}.json", content,
+    res = await _upload_document(chat_id, f"NexoraPanel-backup-{stamp}.json", content,
                                  f"💾 <b>بکاپ NexoraPanel</b>\n{len(LINKS)} کانفیگ · {len(SUBS)} گروه\n⚠️ این فایل حاوی UUID همه‌ی کانفیگ‌هاست؛ جای امن نگهش دار.")
     if not res or not res.get("ok"):
         await _send(chat_id, "❌ ارسال فایل بکاپ ناموفق بود.")
