@@ -16,5 +16,5 @@ if __name__ == "__main__":
             print("tg-proxy: single-port mux enabled")
     except Exception as exc:
         print("tg-proxy mux skipped:", exc)
-    print(f"vodiwalker launcher → starting on 0.0.0.0:{port}")
+    print(f"NexoraPanel launcher → starting on 0.0.0.0:{port}")
     uvicorn.Server(config).run()
