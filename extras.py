@@ -275,7 +275,7 @@ async def create_all_protocols(request, body: dict, cfg: dict, profile: str, por
     speed_bytes = cfg["speed"] if _sv <= 0 else M.parse_speed_to_bytes(_sv, str(body.get("speed_limit_unit") or "MBIT").upper())
     ip_limit = M.safe_int(body.get("ip_limit", 0), minimum=0)
     conn_limit = M.safe_int(body.get("connection_limit", 0), minimum=0) or cfg["conn"]
-    sub_id, sub = await M.create_sub_group(name=(custom or M.sanitize_config_name(name))[:60] or "VodiWalker-all",
+    sub_id, sub = await M.create_sub_group(name=(custom or M.sanitize_config_name(name))[:60] or "NexoraPanel-all",
                                            desc="همه‌ی پروتکل‌ها · بهترین تنظیم خودکار")
     members = [("vless-ws", "WS+TLS"), ("xhttp-packet-up", "XHTTP packet-up"), ("xhttp-stream-up", "XHTTP stream-up")]
     tcp = await detect_tcp(request)
