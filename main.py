@@ -9034,7 +9034,7 @@ async def api_reports_export_csv(token=Depends(require_auth)):
     return Response(
         content=csv_content,
         media_type="text/csv",
-        headers={"Content-Disposition": "attachment; filename=vodiwalker-links-report.csv"},
+        headers={"Content-Disposition": "attachment; filename=NexoraPanel-links-report.csv"},
     )
 
 
