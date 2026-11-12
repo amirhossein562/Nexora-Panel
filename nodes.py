@@ -305,7 +305,7 @@ async def probe_node(url: str, token: str) -> dict:
         elif r.status_code == 429:
             res["error"] = "نود تلاش‌های ناموفق زیاد دیده؛ چند دقیقه بعد دوباره امتحان کن"
         elif r.status_code == 404:
-            res["error"] = "این آدرس یک پنل VodiWalker با قابلیت نود نیست (نسخه‌ی پنل را آپدیت کن)"
+            res["error"] = "این آدرس یک پنل NexoraPanel با قابلیت نود نیست (نسخه‌ی پنل را آپدیت کن)"
         elif 300 <= r.status_code < 400:
             res["error"] = "آدرس ریدایرکت می‌شود؛ آدرس نهایی (https) را وارد کن"
         elif r.status_code != 200:
@@ -313,7 +313,7 @@ async def probe_node(url: str, token: str) -> dict:
         else:
             d = r.json()
             if not (isinstance(d, dict) and d.get("ok") and d.get("service") == "vodiwalker"):
-                res["error"] = "پاسخ این آدرس شبیه پنل VodiWalker نیست"
+                res["error"] = "پاسخ این آدرس شبیه پنل NexoraPanel نیست"
             else:
                 res.update(
                     online=True,
