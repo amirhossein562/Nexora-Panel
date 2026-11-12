@@ -1813,7 +1813,7 @@ def build_info_server_remark(used_bytes: int, limit_bytes: int, expires_at) -> s
     در خروجی نوشته نمی‌شود) و حجم/زمان باقی‌مانده را به کاربر نشان می‌دهد."""
     show_volume = bool(CONFIG.get("sub_info_line_show_volume", True))
     show_expiry = bool(CONFIG.get("sub_info_line_show_expiry", True))
-    parts = ["🌐 Vodiwalkerpanel"]
+    parts = ["🌐 Nexora-Panel"]
     if show_volume:
         used = int(used_bytes or 0)
         limit = int(limit_bytes or 0)
