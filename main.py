@@ -8720,7 +8720,7 @@ async def api_approve_admin_request(req_id: str, request: Request, token=Depends
 
     delivery_message = (
         f"سلام {req.get('full_name','')} عزیز 👋\n\n"
-        f"حساب ادمین شما در VodiWalker فعال شد.\n\n"
+        f"حساب ادمین شما در Nexora-Panel فعال شد.\n\n"
         f"نام کاربری: {username}\n"
         f"رمز عبور: {password}\n\n"
         f"از طریق صفحه ورود پنل وارد شوید و رمز خود را در اولین فرصت تغییر دهید."
